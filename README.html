@@ -57,19 +57,9 @@
       background-color: rgb(121, 121, 121);
       color: white;
     }
-    #maxmark {
-      margin-left: 2%;
-    }
-    .first-name,
-    .last-name,
-    .mark {
-      text-align: center;
-    }
-    .submit {
-      width: 20%;
-    }
+   
   </style>
-  <body>
+<body>
     <div class="form-wrapper">
       <div class="row">
         <div class="label-wrapper">
@@ -100,7 +90,8 @@
       <p id="valid3"></p>
       <div class="row">
         <button id="add" onclick="add()">Add</button>
-        <button id="maxmark" onclick="">Find Max Mark</button>
+        <button id="maxmark" onclick="maxi()">Find Max Mark</button>
+        <p id="demo"></p>
       </div>
     </div>
 
@@ -132,14 +123,16 @@
          *
          */
         var x, y, z, text;
-        y = document.getElementById("fname").value;
-        x = document.getElementById("mark").value;
-        z = document.getElementById("lname").value;
+        y = firstNameElement.value;
+        x = markElement.value;
+        z = lastNameElement.value;
         if (y == "") {
           alert("please enter first name");
+          return;
         }
         if (z == "") {
           alert("please enter last name");
+          return;
         }
 
         if (isNaN(x) || x < 0 || x > 100 || x == "") {
@@ -155,33 +148,31 @@
         var student = new Student(
           firstNameElement.value,
           lastNameElement.value,
-          markElement.value
+          parseFloat(markElement.value)
         );
-        parseFloat(markElement.value);
 
         studentList.push(student);
 
         var row = `<div class="row">
-          <div class="first-name">${student.firstName}</div>
-          <div class="last-name">${student.lastName}</div>
-          <div class="mark ">${student.mark}</div>
-          </div>`;
+                  <div class="first-name">${student.firstName}</div>
+                  <div class="last-name">${student.lastName}</div>
+                  <div class="mark ">${student.mark}</div>
+                  </div>`;
 
-        if (isNaN(x) || x < 0 || x > 100 || x == "" || y == "" || z == "") {
-          document.getElementById("table-body").innerHTML != row;
-        } else document.getElementById("table-body").innerHTML += row;
-
+        if (!(isNaN(x) || x < 0 || x > 100 || x == "" || y == "" || z == "")) {
+          document.getElementById("table-body").innerHTML += row;
+        }
         firstNameElement.value = "";
         lastNameElement.value = "";
         markElement.value = "";
         firstNameElement.focus();
       };
-
-      mark = document.getElementById("mark");
-      for (var i = 0; studentList.length; i++) {
-        studentList[i].mark.sort(function (a, b) {
-          return a - b;
-        });
+      maximum = 0;
+      for (i = 0; i < studentList.length; i++) {
+        if (studentList[i].student.mark < maximum) {
+          maximum = studentList[i].mark;
+          console.log(maximum);
+        }
       }
     </script>
   </body>
